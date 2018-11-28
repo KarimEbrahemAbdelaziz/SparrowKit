@@ -2,6 +2,18 @@
 
 It is library of projects [SPPermission](https://github.com/IvanVorobei/SPPermission) & [SPStorkController](https://github.com/IvanVorobei/SPStorkController). Also library have many useful extenshions and classes. Some fitures I am describe here
 
+- [Integration](#integration)
+- [Extenshions](#extenshions)
+    - [UIView](#uiview)
+    - [UIViewController](#uiviewcontroller)
+    - [UIButton](#uibutton)
+    - [UIImageView](#uiimageview)
+    - [UILabel](#uilabel)
+    - [UITableView](#uitableview)
+    - [UIColor](#uicolor)
+    - [String](#string)
+
+
 ## Integration
 Drop in `Source/sparrow` folder to your Xcode project. Make sure to enable `Copy items if needed` and `Create groups`
 
@@ -143,10 +155,11 @@ UIColor.init(hex: "#000000")
 ```
 
 ### String 
+
 ```swift
-"ivanvorobei@icloud.com".isEmail // return true
+let _ = "ivanvorobei@icloud.com".isEmail
 ```
 
 ```swift
-"ivanvorobei@icloud.com".isLink // return false
+let _ = "ivanvorobei@icloud.com".isLink
 ```
