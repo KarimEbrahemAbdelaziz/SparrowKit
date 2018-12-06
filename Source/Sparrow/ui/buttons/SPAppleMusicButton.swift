@@ -21,33 +21,50 @@
 
 import UIKit
 
-class SPScrollView: UIScrollView {
+class SPAppleMusicButton: SPButton {
     
-    init() {
-        super.init(frame: .zero)
-        self.commonInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.commonInit()
-    }
-    
-    internal func commonInit() {
-        if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = .never
+    var mode: Mode = .unselect {
+        didSet {
+            self.updateStyle(animated: false)
         }
-        self.delaysContentTouches = false
     }
     
-    override func touchesShouldCancel(in view: UIView) -> Bool {
-        if view is UIControl
-            && !(view is UITextInput)
-            && !(view is UISlider)
-            && !(view is UISwitch) {
-            return true
+    var selectColor: UIColor = UIColor.init(hex: "FD2D55") {
+        didSet {
+            self.updateStyle(animated: false)
         }
-        
-        return super.touchesShouldCancel(in: view)
+    }
+    
+    var baseColor: UIColor = UIColor.init(hex: "F8F7FC") {
+        didSet {
+            self.updateStyle(animated: false)
+        }
+    }
+    
+    override func commonInit() {
+        super.commonInit()
+        self.layer.cornerRadius = 8
+        self.titleLabel?.font = UIFont.system(type: .DemiBold, size: 15)
+        self.contentEdgeInsets = UIEdgeInsets.init(top: 12, left: 27, bottom: 12, right: 27)
+        self.mode = .unselect
+    }
+    
+    private func updateStyle(animated: Bool) {
+        switch self.mode {
+        case .select:
+            self.backgroundColor = self.selectColor
+            self.setTitleColor(UIColor.white)
+            break
+        case .unselect:
+            self.backgroundColor = self.baseColor
+            self.setTitleColor(self.selectColor)
+            break
+        }
+    }
+    
+    enum Mode {
+        case select
+        case unselect
     }
 }
+

@@ -21,10 +21,16 @@
 
 import UIKit
 
-class SPScrollView: UIScrollView {
+public class SPView: UIView {
+    
+    var round: Bool = false {
+        didSet {
+            self.layoutSubviews()
+        }
+    }
     
     init() {
-        super.init(frame: .zero)
+        super.init(frame: CGRect.zero)
         self.commonInit()
     }
     
@@ -33,21 +39,12 @@ class SPScrollView: UIScrollView {
         self.commonInit()
     }
     
-    internal func commonInit() {
-        if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = .never
-        }
-        self.delaysContentTouches = false
-    }
+    internal func commonInit() {}
     
-    override func touchesShouldCancel(in view: UIView) -> Bool {
-        if view is UIControl
-            && !(view is UITextInput)
-            && !(view is UISlider)
-            && !(view is UISwitch) {
-            return true
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        if self.round {
+            self.round()
         }
-        
-        return super.touchesShouldCancel(in: view)
     }
 }

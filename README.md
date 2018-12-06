@@ -1,6 +1,6 @@
 # SparrowKit
 
-It is library of projects [SPPermission](https://github.com/IvanVorobei/SPPermission) & [SPStorkController](https://github.com/IvanVorobei/SPStorkController). Also library have many useful extenshions and classes. Some fitures I am describe here
+It is library for projects [SPPermission](https://github.com/IvanVorobei/SPPermission) & [SPStorkController](https://github.com/IvanVorobei/SPStorkController). Also library have many useful extenshions and classes. Some fitures I am describe here
 
 - [Integration](#integration)
 - [Extenshions](#extenshions)
@@ -15,7 +15,7 @@ It is library of projects [SPPermission](https://github.com/IvanVorobei/SPPermis
 
 
 ## Integration
-Drop in `Source/sparrow` folder to your Xcode project. Make sure to enable `Copy items if needed` and `Create groups`
+Drop in `Source/Sparrow` folder to your Xcode project. Make sure to enable `Copy items if needed` and `Create groups`
 
 Or via CocoaPods:
 ```ruby

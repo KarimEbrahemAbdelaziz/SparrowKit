@@ -21,55 +21,68 @@
 
 import UIKit
 
-class SPPlayCircleButton: UIButton {
+class SPSocialButton: UIButton {
     
-    var audioState: AudioState = AudioState.play {
+    let iconView = SPSocialIconView.init()
+    var widthIconFactor: CGFloat = 0.5
+    var heightIconFactor: CGFloat = 0.5
+    
+    var type: SPSocialNetwork {
         didSet {
-            switch self.audioState {
-            case .play:
-                self.iconView.type = .play
-                break
-            case .pause:
-                self.iconView.type = .pause
-                break
-            case .stop:
-                self.iconView.type = .stop
-                break
+            self.iconView.type = self.type
+        }
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                self.iconView.color = self.iconView.color.withAlphaComponent(0.7)
+            } else {
+                self.iconView.color = self.iconView.color.withAlphaComponent(1)
             }
         }
     }
     
-    var iconColor = SPNativeStyleKit.Colors.white {
+    override var isEnabled: Bool {
         didSet {
-            self.iconView.color = self.iconColor
+            if isEnabled {
+                self.alpha = 1
+            } else {
+                self.alpha = 0.5
+            }
         }
     }
     
-    let iconView = SPAudioIconView.init()
-    
     init() {
+        self.type = .facebook
         super.init(frame: CGRect.zero)
-        self.addSubview(self.iconView)
-        self.iconView.isUserInteractionEnabled = false
-        self.setTitle("", for: .normal)
-        self.backgroundColor = SPNativeStyleKit.Colors.blue
-        self.audioState = .play
+        self.commonInit()
+    }
+    
+    init(type: SPSocialNetwork) {
+        self.type = type
+        super.init(frame: CGRect.zero)
+        self.commonInit()
+        defer {
+            self.type = type
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.iconView.setEqualsFrameFromBounds(self, withWidthFactor: 0.45, withHeightFactor: 0.45, withCentering: true)
-        self.round()
+    fileprivate func commonInit() {
+        self.iconView.isUserInteractionEnabled = false
+        self.addSubview(self.iconView)
+        self.backgroundColor = SPNativeStyleKit.Colors.blue
+        self.iconView.color = SPNativeStyleKit.Colors.white
     }
     
-    enum AudioState {
-        case play
-        case pause
-        case stop
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.iconView.setEqualsFrameFromBounds(self, withWidthFactor: self.widthIconFactor, withHeightFactor: self.heightIconFactor, withCentering: true)
+        self.round()
     }
 }
 

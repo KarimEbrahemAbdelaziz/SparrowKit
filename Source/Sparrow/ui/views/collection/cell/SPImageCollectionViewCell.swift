@@ -21,33 +21,22 @@
 
 import UIKit
 
-class SPScrollView: UIScrollView {
+class SPImageCollectionViewCell: SPCollectionContainerCell<SPDownloadingImageView> {
     
-    init() {
-        super.init(frame: .zero)
-        self.commonInit()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.view.layer.cornerRadius = 10
+        self.view.contentMode = .scaleAspectFill
+        self.view.setNative()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.commonInit()
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    internal func commonInit() {
-        if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = .never
-        }
-        self.delaysContentTouches = false
-    }
-    
-    override func touchesShouldCancel(in view: UIView) -> Bool {
-        if view is UIControl
-            && !(view is UITextInput)
-            && !(view is UISlider)
-            && !(view is UISwitch) {
-            return true
-        }
-        
-        return super.touchesShouldCancel(in: view)
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.view.contentMode = .scaleAspectFill
+        self.view.startLoading()
     }
 }

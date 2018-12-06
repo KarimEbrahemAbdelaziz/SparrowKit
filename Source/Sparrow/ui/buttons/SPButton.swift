@@ -21,10 +21,27 @@
 
 import UIKit
 
-class SPScrollView: UIScrollView {
+public class SPButton: UIButton {
+    
+    var gradientView: SPGradientView? {
+        didSet {
+            self.gradientView?.isUserInteractionEnabled = false
+            if self.gradientView?.superview == nil {
+                if self.gradientView != nil {
+                    self.insertSubview(self.gradientView!, at: 0)
+                }
+            }
+        }
+    }
+    
+    var round: Bool = false {
+        didSet {
+            self.layoutSubviews()
+        }
+    }
     
     init() {
-        super.init(frame: .zero)
+        super.init(frame: CGRect.zero)
         self.commonInit()
     }
     
@@ -33,21 +50,13 @@ class SPScrollView: UIScrollView {
         self.commonInit()
     }
     
-    internal func commonInit() {
-        if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = .never
-        }
-        self.delaysContentTouches = false
-    }
+    internal func commonInit() {}
     
-    override func touchesShouldCancel(in view: UIView) -> Bool {
-        if view is UIControl
-            && !(view is UITextInput)
-            && !(view is UISlider)
-            && !(view is UISwitch) {
-            return true
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        self.gradientView?.setEqualsBoundsFromSuperview()
+        if self.round {
+            self.round()
         }
-        
-        return super.touchesShouldCancel(in: view)
     }
 }

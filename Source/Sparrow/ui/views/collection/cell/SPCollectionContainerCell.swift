@@ -21,33 +21,23 @@
 
 import UIKit
 
-class SPScrollView: UIScrollView {
+public class SPCollectionContainerCell<ContentView: UIView>: UICollectionViewCell {
     
-    init() {
-        super.init(frame: .zero)
-        self.commonInit()
+    let view = ContentView.init()
+    var currentIndexPath: IndexPath?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.clear
+        self.addSubview(view)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.commonInit()
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    internal func commonInit() {
-        if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = .never
-        }
-        self.delaysContentTouches = false
-    }
-    
-    override func touchesShouldCancel(in view: UIView) -> Bool {
-        if view is UIControl
-            && !(view is UITextInput)
-            && !(view is UISlider)
-            && !(view is UISwitch) {
-            return true
-        }
-        
-        return super.touchesShouldCancel(in: view)
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        self.view.setEqualsFrameFromBounds(self)
     }
 }

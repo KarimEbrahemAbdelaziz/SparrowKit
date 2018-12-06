@@ -21,7 +21,17 @@
 
 import UIKit
 
-class SPScrollView: UIScrollView {
+class SPTextField: UITextField {
+    
+    public var textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
+        didSet { setNeedsDisplay() }
+    }
+    
+    var cursorColor: UIColor = UIColor.blue {
+        didSet {
+            self.tintColor = self.cursorColor
+        }
+    }
     
     init() {
         super.init(frame: .zero)
@@ -33,21 +43,21 @@ class SPScrollView: UIScrollView {
         self.commonInit()
     }
     
-    internal func commonInit() {
-        if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = .never
-        }
-        self.delaysContentTouches = false
+    internal func commonInit() {}
+    
+    open override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: textInsets)
     }
     
-    override func touchesShouldCancel(in view: UIView) -> Bool {
-        if view is UIControl
-            && !(view is UITextInput)
-            && !(view is UISlider)
-            && !(view is UISwitch) {
-            return true
-        }
-        
-        return super.touchesShouldCancel(in: view)
+    open override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: textInsets)
+    }
+    
+    open override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: textInsets)
+    }
+    
+    open override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: textInsets))
     }
 }

@@ -21,33 +21,18 @@
 
 import UIKit
 
-class SPScrollView: UIScrollView {
+public struct SPConstraints {
     
-    init() {
-        super.init(frame: .zero)
-        self.commonInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.commonInit()
-    }
-    
-    internal func commonInit() {
-        if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = .never
-        }
-        self.delaysContentTouches = false
-    }
-    
-    override func touchesShouldCancel(in view: UIView) -> Bool {
-        if view is UIControl
-            && !(view is UITextInput)
-            && !(view is UISlider)
-            && !(view is UISwitch) {
-            return true
-        }
-        
-        return super.touchesShouldCancel(in: view)
+    static func setEqualSize(_ view: UIView, superVuew: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: superVuew.topAnchor),
+            view.leftAnchor.constraint(equalTo: superVuew.leftAnchor),
+            view.rightAnchor.constraint(equalTo: superVuew.rightAnchor),
+            view.bottomAnchor.constraint(equalTo: superVuew.bottomAnchor)
+        ])
     }
 }
+
+
+       

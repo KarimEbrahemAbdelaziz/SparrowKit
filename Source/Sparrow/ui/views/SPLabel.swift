@@ -21,10 +21,10 @@
 
 import UIKit
 
-class SPScrollView: UIScrollView {
+public class SPLabel: UILabel {
     
     init() {
-        super.init(frame: .zero)
+        super.init(frame: CGRect.zero)
         self.commonInit()
     }
     
@@ -33,21 +33,5 @@ class SPScrollView: UIScrollView {
         self.commonInit()
     }
     
-    internal func commonInit() {
-        if #available(iOS 11.0, *) {
-            self.contentInsetAdjustmentBehavior = .never
-        }
-        self.delaysContentTouches = false
-    }
-    
-    override func touchesShouldCancel(in view: UIView) -> Bool {
-        if view is UIControl
-            && !(view is UITextInput)
-            && !(view is UISlider)
-            && !(view is UISwitch) {
-            return true
-        }
-        
-        return super.touchesShouldCancel(in: view)
-    }
+    internal func commonInit() {}
 }
